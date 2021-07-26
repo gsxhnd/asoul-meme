@@ -64,7 +64,6 @@ def compare_list(old, new):
 
 
 if __name__ == '__main__':
-    db.init_sql()
     scheduler = BackgroundScheduler()
     scheduler.add_job(tick, 'cron', hour=23, minute=0)
     scheduler.start()

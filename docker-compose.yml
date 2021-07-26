@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  meme:
+    container_name: meme
+    image: test:1
+    ports:
+      - "8000:8000"
+    command: python3 /app/api.py

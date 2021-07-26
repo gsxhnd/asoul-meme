@@ -33,7 +33,6 @@ def insert_art_list(art_data):
         cv_cover = art_data[i]["cv_cover"]
         sql_row = "insert into art_list (cv_id, cv_title, cv_cover) values ({},'{}','{}');".format(cv_id, str(cv_title),
                                                                                                    str(cv_cover))
-        print(sql_row)
         c.execute(sql_row)
     conn.commit()
     c.close()

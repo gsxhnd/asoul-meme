@@ -36,4 +36,4 @@ if __name__ == '__main__':
         html_data = get_art_detail_data(art_list[i]["cv_id"])
         img_list = paser_art_detail_data(html_data)
         db.insert_meme_img_list(img_list)
-        time.sleep(10)
+        time.sleep(5)
