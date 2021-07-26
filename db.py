@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect('example.db')
+conn = sqlite3.connect('example.db',check_same_thread=False)
 
 
 def get_sql_connect():

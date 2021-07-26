@@ -1,31 +1,13 @@
-import time
-import urllib.parse
-from http.server import HTTPServer, BaseHTTPRequestHandler
-import json
 from apscheduler.schedulers.background import BackgroundScheduler
+from flask import Flask, request
+from flask_cors import CORS
 
 import art_detail
 import art_list
 import db
 
-
-class HttpHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        req = urllib.parse.urlparse(self.path)
-        query = urllib.parse.parse_qs(req.query)
-
-        page = query["page"][0]
-        limit = query["limit"][0]
-        offset = 0
-        if int(page) > 1:
-            offset = (int(page) - 1) * int(limit)
-
-        res = db.get_img_list(limit=limit, offset=offset)
-
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        self.wfile.write(json.dumps(res).encode())
+app = Flask(__name__)
+CORS(app)
 
 
 def tick():
@@ -63,10 +45,27 @@ def compare_list(old, new):
     return new_list
 
 
+@app.route("/", methods={"GET"})
+def hello_world():
+    page = request.args.get("page")
+    limit = request.args.get("limit")
+    offset = 0
+    if page is None:
+        page = 1
+    if limit is None:
+        limit = 10
+    if int(page) > 1:
+        offset = (int(page) - 1) * int(limit)
+
+    res = db.get_img_list(limit=int(limit), offset=offset)
+    print(page)
+    print(limit)
+    return {"data": res}
+
+
 if __name__ == '__main__':
     scheduler = BackgroundScheduler()
     scheduler.add_job(tick, 'cron', hour=23, minute=0)
     scheduler.start()
-    httpd = HTTPServer(('0.0.0.0', 8000), HttpHandler)
     print("start api server in 8000")
-    httpd.serve_forever()
+    app.run(host="0.0.0.0", port=8000, debug=False)
