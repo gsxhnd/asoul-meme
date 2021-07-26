@@ -67,6 +67,6 @@ if __name__ == '__main__':
     scheduler = BackgroundScheduler()
     scheduler.add_job(tick, 'cron', hour=23, minute=0)
     scheduler.start()
-    port = 8000
-    httpd = HTTPServer(('127.0.0.1', 8000), HttpHandler)
+    httpd = HTTPServer(('0.0.0.0', 8000), HttpHandler)
+    print("start api server in 8000")
     httpd.serve_forever()

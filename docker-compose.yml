@@ -3,7 +3,7 @@ version: "3"
 services:
   meme:
     container_name: meme
-    image: test:1
+    image: gsxhnd/asoul-meme:version-0.0.2
     ports:
       - "8000:8000"
     command: python3 /app/api.py
