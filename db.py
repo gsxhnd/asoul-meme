@@ -7,6 +7,24 @@ def get_sql_connect():
     return conn
 
 
+def init_sql():
+    c = conn.cursor()
+    c.execute('''create table if not exists meme_img
+    (id  integer
+        constraint meme_img_pk
+            primary key autoincrement,
+    url text);''')
+    c.execute('''create table if not exists art_list
+        (cv_id    int not null
+        constraint art_list_pk
+            primary key,
+         cv_title text,
+         cv_cover text);''')
+
+    conn.commit()
+    c.close()
+
+
 def insert_art_list(art_data):
     c = conn.cursor()
     for i in range(len(art_data)):
@@ -54,8 +72,4 @@ def get_img_list(offset=0, limit=10):
 
 
 if __name__ == '__main__':
-    img_data = ["1", "2", "3"]
-    # arts = get_art_list()
-    # insert_meme_img_list(img_data)
-    # imgs = get_img_list()
-    # print(imgs)
+    init_sql()
