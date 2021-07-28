@@ -49,18 +49,22 @@ def compare_list(old, new):
 def hello_world():
     page = request.args.get("page")
     limit = request.args.get("limit")
-    offset = 0
+    page_int, limit_int, offset = 1, 10, 0
     if page is None:
         page = 1
     if limit is None:
         limit = 10
-    if int(page) > 1:
-        offset = (int(page) - 1) * int(limit)
+    try:
+        page_int = int(page)
+        limit_int = int(limit)
+    except Exception:
+        return {"code": 10010, "message": "query data error", "data": None}
 
-    res = db.get_img_list(limit=int(limit), offset=offset)
-    print(page)
-    print(limit)
-    return {"data": res}
+    if page_int > 1:
+        offset = (page_int - 1) * limit_int
+
+    res = db.get_img_list(limit=limit_int, offset=offset)
+    return {"code": 0, "message": "success", "data": res}
 
 
 if __name__ == '__main__':
