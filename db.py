@@ -68,7 +68,7 @@ def get_img_list(offset=0, limit=10):
     curs = c.execute(sql_row)
     data = []
     for row in curs:
-        d = {"id": row[0], "url": row[1]}
+        d = {"id": row[0], "url": row[1], "width": row[2], "height": row[3]}
         data.append(d)
     curs.close()
     return data
