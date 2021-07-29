@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect('example.db',check_same_thread=False)
+conn = sqlite3.connect('example.db', check_same_thread=False)
 
 
 def get_sql_connect():
@@ -13,7 +13,9 @@ def init_sql():
     (id  integer
         constraint meme_img_pk
             primary key autoincrement,
-    url text);''')
+    url text,
+    width int,
+    height int);''')
     c.execute('''create table if not exists art_list
         (cv_id    int not null
         constraint art_list_pk
@@ -41,7 +43,9 @@ def insert_art_list(art_data):
 def insert_meme_img_list(img_list):
     c = conn.cursor()
     for i in range(len(img_list)):
-        sql_row = "insert into meme_img (url) values ('{}');".format(img_list[i])
+        sql_row = "insert into meme_img (url,width, height) values ('{}',{},{});".format(img_list[i]["url"],
+                                                                                         img_list[i]["width"],
+                                                                                         img_list[i]["height"])
         c.execute(sql_row)
     conn.commit()
     c.close()

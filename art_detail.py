@@ -24,7 +24,15 @@ def paser_art_detail_data(data):
     content_data = content_soup.find_all("img")
     for index in range(len(content_data)):
         if index != 0:
-            img_list.append(re.sub("//", "", content_data[index]["data-src"]))
+            img = re.sub("//", "", content_data[index]["data-src"])
+            width = content_data[index]["width"]
+            height = content_data[index]["height"]
+            data = {
+                "url": img,
+                "width": width,
+                "height": height
+            }
+            img_list.append(data)
     return img_list
 
 

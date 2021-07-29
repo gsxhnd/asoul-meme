@@ -58,8 +58,6 @@ def hello_world():
         offset = (int(page) - 1) * int(limit)
 
     res = db.get_img_list(limit=int(limit), offset=offset)
-    print(page)
-    print(limit)
     return {"data": res}
 
 
