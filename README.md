@@ -32,8 +32,6 @@
 
 `python3 api.py`
 
-
-
 ## 镜像运行
 
 镜像仓库: `https://hub.docker.com/r/gsxhnd/asoul-meme`
@@ -52,11 +50,7 @@ services:
     command: python3 /app/api.py
 ```
 
-
-
 ## 获取图片列表接口接口
-
-
 
 ```http
 GET /
@@ -80,26 +74,30 @@ GET /?page=1&limit=5
 
 ```json
 // 返回内容
-[
+{
+  "code": 0,
+  "data": [
     {
-        "id": 679,
-        "url": "i0.hdslb.com/bfs/article/875f3725e7f5835abf2cf9b38c6b7c887932467e.jpg"
+      "id": 679,
+      "url": "i0.hdslb.com/bfs/article/875f3725e7f5835abf2cf9b38c6b7c887932467e.jpg"
     },
     {
-        "id": 678,
-        "url": "i0.hdslb.com/bfs/article/1edb2b115d7bfa63cfc56687c40c36df2383b83f.jpg"
+      "id": 678,
+      "url": "i0.hdslb.com/bfs/article/1edb2b115d7bfa63cfc56687c40c36df2383b83f.jpg"
     },
     {
-        "id": 677,
-        "url": "i0.hdslb.com/bfs/article/21b488448b070500769efec0477a1ab6ddccef7f.jpg"
+      "id": 677,
+      "url": "i0.hdslb.com/bfs/article/21b488448b070500769efec0477a1ab6ddccef7f.jpg"
     },
     {
-        "id": 676,
-        "url": "i0.hdslb.com/bfs/article/ea087243ef5342880f9ef1cf156be5d7c6d6dbaa.jpg"
+      "id": 676,
+      "url": "i0.hdslb.com/bfs/article/ea087243ef5342880f9ef1cf156be5d7c6d6dbaa.jpg"
     },
     {
-        "id": 675,
-        "url": "i0.hdslb.com/bfs/article/e23169e1c6c8d5a365019d3ebafc19b321065e43.jpg"
+      "id": 675,
+      "url": "i0.hdslb.com/bfs/article/e23169e1c6c8d5a365019d3ebafc19b321065e43.jpg"
     }
-]
+  ],
+  "message": "success"
+}
 ```
