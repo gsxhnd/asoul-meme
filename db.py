@@ -74,5 +74,15 @@ def get_img_list(offset=0, limit=10, order_by="id desc"):
     return data
 
 
+def get_all_img():
+    c = conn.cursor()
+    sql_row = "SELECT url  from meme_img;"
+    curs = c.execute(sql_row)
+    imgs = []
+    for row in curs:
+        imgs.append(row[0])
+    return imgs
+
+
 if __name__ == '__main__':
     init_sql()
