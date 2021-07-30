@@ -62,9 +62,9 @@ def get_art_list():
     return data
 
 
-def get_img_list(offset=0, limit=10):
+def get_img_list(offset=0, limit=10, order_by="id desc"):
     c = conn.cursor()
-    sql_row = "SELECT *  from meme_img order by id desc  limit {} offset {}".format(limit, offset)
+    sql_row = "SELECT *  from meme_img order by {} limit {} offset {}".format(order_by, limit, offset)
     curs = c.execute(sql_row)
     data = []
     for row in curs:

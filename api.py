@@ -47,23 +47,31 @@ def compare_list(old, new):
 
 @app.route("/", methods={"GET"})
 def hello_world():
-    page = request.args.get("page")
-    limit = request.args.get("limit")
-    page_int, limit_int, offset = 1, 10, 0
-    if page is None:
-        page = 1
-    if limit is None:
-        limit = 10
-    try:
-        page_int = int(page)
-        limit_int = int(limit)
-    except Exception:
-        return {"code": 10010, "message": "query data error", "data": None}
+    page = request.args.get("page", default=1, type=int)
+    limit = request.args.get("limit", default=10, type=int)
+    order_by = request.args.get("order_by", default="id", type=str)
+    sort_by = request.args.get("sort_by", default="desc", type=str)
+    order = ""
+    offset = 0
+    order_by_list = order_by.split(",")
+    sort_by_list = sort_by.split(",")
+    if len(order_by_list) != len(sort_by_list):
+        return {"code": 10010, "message": "order query error", "data": None}
 
-    if page_int > 1:
-        offset = (page_int - 1) * limit_int
+    for i in range(len(order_by_list)):
+        if order_by_list[i] not in ["width", "height", "id"]:
+            return {"code": 10010, "message": "order query error", "data": None}
+        if sort_by_list[i] not in ["desc", "asc"]:
+            return {"code": 10010, "message": "order query error", "data": None}
+        if i == 0:
+            order += order_by_list[i] + " " + sort_by_list[i]
+        else:
+            order += "," + order_by_list[i] + " " + sort_by_list[i]
 
-    res = db.get_img_list(limit=limit_int, offset=offset)
+    if page > 1:
+        offset = (page - 1) * limit
+
+    res = db.get_img_list(limit=limit, offset=offset, order_by=order)
     return {"code": 0, "message": "success", "data": res}
 
 
