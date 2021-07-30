@@ -7,6 +7,7 @@ def download_img(img_urls):
     for i in range(len(img_urls)):
         file_name = str(img_urls[i]).split("/")[3]
         response = requests.get("https://" + img_urls[i])
+        print("downloading img: ", file_name)
         open("./img/" + file_name, "wb").write(response.content)
         sleep(1)
 
